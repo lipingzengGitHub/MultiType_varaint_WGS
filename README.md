@@ -10,13 +10,13 @@ A full-featured variant analysis pipeline for WGS data using Docker + Nextflow. 
 
 ## 🚀 Run the Pipeline
 ```bash
-nextflow run MultiType_variant.nf -with-docker
+nextflow run MultiType_varaint_WGS.nf  -with-docker
 
 
 Data Structure
 MultiTypeVariantPipeline/
 ├── Dockerfile
-├── MultiType_variant.nf
+├── MultiType_varaint_WGS.nf 
 ├── nextflow.config
 ├── report_template.Rmd
 ├── data/                    # (optional) 示例数据位置

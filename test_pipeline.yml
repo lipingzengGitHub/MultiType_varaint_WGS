@@ -12,5 +12,5 @@ jobs:
           curl -s https://get.nextflow.io | bash
           sudo mv nextflow /usr/local/bin/
       - name: Run test
-        run: nextflow run MultiType_variant.nf -with-docker
+        run: nextflow run MultiType_varaint_WGS.nf -with-docker
 
