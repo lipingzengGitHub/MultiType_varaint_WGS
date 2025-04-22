@@ -1,0 +1,16 @@
+*.sam
+*.bam
+*.bai
+*.vcf*
+*.html
+*.log
+*.txt
+*.Rproj
+__pycache__/
+.Rhistory
+.RData
+.Ruserdata
+data/
+output/
+
+

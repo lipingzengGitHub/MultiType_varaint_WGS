@@ -1,0 +1,60 @@
+---
+title: "NGS Variant Analysis Report"
+output: html_document
+params:
+  annot_file: NULL
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+library(DT)
+```
+
+## 📁 Input File
+
+```{r read}
+# Read the annotated variant file
+df <- read.delim(params$annot_file, sep="\t", header=TRUE, stringsAsFactors=FALSE)
+```
+
+## 🧬 Top Variants (ClinVar or COSMIC)
+
+```{r top}
+head(df %>% filter(grepl("CLINSIG|COSMIC", df[,1], ignore.case = TRUE)), 10) %>% 
+  datatable(options = list(pageLength = 5))
+```
+
+## 📊 Variant Type Summary
+
+```{r variant-summary}
+if("ExonicFunc.refGene" %in% colnames(df)) {
+  df %>% count(ExonicFunc.refGene, sort=TRUE) %>%
+    ggplot(aes(x=reorder(ExonicFunc.refGene, n), y=n)) +
+    geom_bar(stat="identity", fill="steelblue") +
+    coord_flip() +
+    labs(title="Variant Functional Types", x="Function", y="Count")
+}
+```
+
+## 🧬 Mutation by Gene (Top 20)
+
+```{r gene-summary}
+if("Gene.refGene" %in% colnames(df)) {
+  df %>% count(Gene.refGene, sort=TRUE) %>%
+    head(20) %>%
+    ggplot(aes(x=reorder(Gene.refGene, n), y=n)) +
+    geom_bar(stat="identity", fill="darkorange") +
+    coord_flip() +
+    labs(title="Top Genes with Variants", x="Gene", y="Variant Count")
+}
+```
+
+## 🔍 View Full Table
+
+```{r full-table}
+datatable(df, options = list(scrollX = TRUE, pageLength = 10))
+
+
+
